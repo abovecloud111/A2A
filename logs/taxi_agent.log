@@ -1,0 +1,1121 @@
+INFO:     Started server process [1892515]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://localhost:10003 (Press CTRL+C to quit)
+INFO:     127.0.0.1:44166 - "GET /.well-known/agent.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41582 - "GET /.well-known/agent.json HTTP/1.1" 200 OK
+INFO:common.server.task_manager:Upserting task c682b90d-d048-4cea-8383-351a8feb5335
+INFO:     127.0.0.1:48994 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.3266294002532959}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":28,"candidates_tokens_details":[{"modality":"TEXT","token_count":28}],"prompt_token_count":727,"prompt_tokens_details":[{"modality":"TEXT","token_count":727}],"total_token_count":755},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task ad9454b7-12f3-4e45-aeb1-4b9f3dab3e2b
+INFO:     127.0.0.1:35202 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，请问是否符合报销规定？"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.4225402085677437}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":23,"candidates_tokens_details":[{"modality":"TEXT","token_count":23}],"prompt_token_count":791,"prompt_tokens_details":[{"modality":"TEXT","token_count":791}],"total_token_count":814},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task a397d4a7-c421-4963-baa1-ac9ddf5a4464
+INFO:     127.0.0.1:52046 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，请问是否符合报销规定？"}],"role":"user"}
+{"parts":[{"text":"请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，乘车日期20250405，上车时间21:58，请审核是否符合报销规定。"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: create_taxi_request_form, args: {'pickup_time': '21:58', 'amount': '89.64', 'date': '20250405', 'pickup_location': '中关村资本大厦'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"pickup_time":"21:58","amount":"89.64","date":"20250405","pickup_location":"中关村资本大厦"},"name":"create_taxi_request_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.04259548431787735}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":39,"candidates_tokens_details":[{"modality":"TEXT","token_count":39}],"prompt_token_count":872,"prompt_tokens_details":[{"modality":"TEXT","token_count":872}],"total_token_count":911},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，请问是否符合报销规定？"}],"role":"user"}
+{"parts":[{"text":"请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，乘车日期20250405，上车时间21:58，请审核是否符合报销规定。"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"21:58","amount":"89.64","date":"20250405","pickup_location":"中关村资本大厦"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_8284524","pickup_location":"中关村资本大厦","pickup_time":"21:58","date":"20250405","amount":"89.64"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+我已收到您的打车费报销请求，请求ID是request_id_8284524。现在将根据公司规定审核您的报销请求。
+
+-----------------------------------------------------------
+Function calls:
+name: reimburse_taxi, args: {'pickup_location': '中关村资本大厦', 'pickup_time': '21:58', 'request_id': 'request_id_8284524'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"我已收到您的打车费报销请求，请求ID是request_id_8284524。现在将根据公司规定审核您的报销请求。\n"},{"function_call":{"args":{"pickup_location":"中关村资本大厦","pickup_time":"21:58","request_id":"request_id_8284524"},"name":"reimburse_taxi"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.09998881494676745}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":74,"candidates_tokens_details":[{"modality":"TEXT","token_count":74}],"prompt_token_count":964,"prompt_tokens_details":[{"modality":"TEXT","token_count":964}],"total_token_count":1038},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，请问是否符合报销规定？"}],"role":"user"}
+{"parts":[{"text":"请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，乘车日期20250405，上车时间21:58，请审核是否符合报销规定。"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"21:58","amount":"89.64","date":"20250405","pickup_location":"中关村资本大厦"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_8284524","pickup_location":"中关村资本大厦","pickup_time":"21:58","date":"20250405","amount":"89.64"}}}],"role":"user"}
+{"parts":[{"text":"我已收到您的打车费报销请求，请求ID是request_id_8284524。现在将根据公司规定审核您的报销请求。\n"},{"function_call":{"args":{"pickup_location":"中关村资本大厦","pickup_time":"21:58","request_id":"request_id_8284524"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_8284524","status":"批准"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+您的打车费报销请求已获批准。请求ID：request_id_8284524，状态：批准。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"您的打车费报销请求已获批准。请求ID：request_id_8284524，状态：批准。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.09229138692220053}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":30,"candidates_tokens_details":[{"modality":"TEXT","token_count":30}],"prompt_token_count":1059,"prompt_tokens_details":[{"modality":"TEXT","token_count":1059}],"total_token_count":1089},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task 2d4ae498-7d0d-4e9c-a2d7-4f1c1590cffa
+INFO:     127.0.0.1:40640 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"请问之前的报销任务有什么结果吗？"}],"role":"user"}
+{"parts":[{"text":"您好，请提供报销请求的具体信息，例如请求ID、上车地点和时间，以便我查询报销状态。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，请问是否符合报销规定？"}],"role":"user"}
+{"parts":[{"text":"请问您的乘车日期和具体上车时间是什么时候？我需要这些信息才能创建报销申请。"}],"role":"model"}
+{"parts":[{"text":"打车费89.64元，出发地点是北京市中关村资本大厦，目的地是天安门广场，乘车日期20250405，上车时间21:58，请审核是否符合报销规定。"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"21:58","amount":"89.64","date":"20250405","pickup_location":"中关村资本大厦"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_8284524","pickup_location":"中关村资本大厦","pickup_time":"21:58","date":"20250405","amount":"89.64"}}}],"role":"user"}
+{"parts":[{"text":"我已收到您的打车费报销请求，请求ID是request_id_8284524。现在将根据公司规定审核您的报销请求。\n"},{"function_call":{"args":{"pickup_location":"中关村资本大厦","pickup_time":"21:58","request_id":"request_id_8284524"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_8284524","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID：request_id_8284524，状态：批准。"}],"role":"model"}
+{"parts":[{"text":"打车费98.46元，出发地点是天安门广场，目的地是301医院，乘车日期20250406，上车时间00:00，请审核是否符合报销规定。"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+非常抱歉，您的出发地点（天安门广场）不符合公司报销规定，只有中关村资本大厦附近的出发地点才可以报销。因此，您的打车费报销请求已被拒绝。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"非常抱歉，您的出发地点（天安门广场）不符合公司报销规定，只有中关村资本大厦附近的出发地点才可以报销。因此，您的打车费报销请求已被拒绝。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.2033235337999132}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":45,"candidates_tokens_details":[{"modality":"TEXT","token_count":45}],"prompt_token_count":1143,"prompt_tokens_details":[{"modality":"TEXT","token_count":1143}],"total_token_count":1188},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task 910ca443-bfae-429d-b70a-521cf440874d
+INFO:     127.0.0.1:50474 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+好的，请问乘车日期和打车费金额是多少？
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.1551205194913424}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":13,"candidates_tokens_details":[{"modality":"TEXT","token_count":13}],"prompt_token_count":745,"prompt_tokens_details":[{"modality":"TEXT","token_count":745}],"total_token_count":758},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task a2bcfc61-ecfb-470f-931c-1b59f0f4c727
+INFO:     127.0.0.1:60468 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: create_taxi_request_form, args: {'pickup_time': '22:42', 'pickup_location': '海淀区学院南路', 'amount': '66.78', 'date': '20250307'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.015018901763818203}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":39,"candidates_tokens_details":[{"modality":"TEXT","token_count":39}],"prompt_token_count":778,"prompt_tokens_details":[{"modality":"TEXT","token_count":778}],"total_token_count":817},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: return_form, args: {'form_request': {'pickup_location': '海淀区学院南路', 'pickup_time': '22:42', 'request_id': 'request_id_4119382', 'date': '20250307', 'amount': '66.78'}}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.0006784907757089689}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":52,"candidates_tokens_details":[{"modality":"TEXT","token_count":52}],"prompt_token_count":870,"prompt_tokens_details":[{"modality":"TEXT","token_count":870}],"total_token_count":922},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task a2bcfc61-ecfb-470f-931c-1b59f0f4c727
+INFO:     127.0.0.1:54990 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+好的，已收到您的打车费报销请求，正在审核中，请稍候。
+
+-----------------------------------------------------------
+Function calls:
+name: reimburse_taxi, args: {'pickup_location': '海淀区学院南路', 'pickup_time': '22:42', 'request_id': 'request_id_4119382'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.12711984232852333}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":57,"candidates_tokens_details":[{"modality":"TEXT","token_count":57}],"prompt_token_count":1488,"prompt_tokens_details":[{"modality":"TEXT","token_count":1488}],"total_token_count":1545},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+您的打车费报销请求已获批准。请求ID是request_id_4119382。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.1028060821386484}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":26,"candidates_tokens_details":[{"modality":"TEXT","token_count":26}],"prompt_token_count":1566,"prompt_tokens_details":[{"modality":"TEXT","token_count":1566}],"total_token_count":1592},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task a2bcfc61-ecfb-470f-931c-1b59f0f4c727
+INFO:     127.0.0.1:42256 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"}
+{"parts":[{"text":"报销从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:common.server.task_manager:Upserting task a2bcfc61-ecfb-470f-931c-1b59f0f4c727
+INFO:     127.0.0.1:42272 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"}
+{"parts":[{"text":"报销从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"text":"从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: create_taxi_request_form, args: {'amount': '13.99', 'date': '20250308', 'pickup_location': '海淀区搜狐网络中心大厦', 'pickup_time': '21:21'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"amount":"13.99","date":"20250308","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21"},"name":"create_taxi_request_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.07182904084523518}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":42,"candidates_tokens_details":[{"modality":"TEXT","token_count":42}],"prompt_token_count":1639,"prompt_tokens_details":[{"modality":"TEXT","token_count":1639}],"total_token_count":1681},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"}
+{"parts":[{"text":"报销从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"amount":"13.99","date":"20250308","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_6496052","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308","amount":"13.99"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: create_taxi_request_form, args: {'pickup_location': '海淀区搜狐网络中心大厦', 'pickup_time': '21:21', 'amount': '13.99', 'date': '20250308'}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","amount":"13.99","date":"20250308"},"name":"create_taxi_request_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.01643736589522589}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":42,"candidates_tokens_details":[{"modality":"TEXT","token_count":42}],"prompt_token_count":1684,"prompt_tokens_details":[{"modality":"TEXT","token_count":1684}],"total_token_count":1726},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"}
+{"parts":[{"text":"报销从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"text":"从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","amount":"13.99","date":"20250308"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_5353199","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308","amount":"13.99"}}}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: return_form, args: {'form_request': {'amount': '13.99', 'request_id': 'request_id_6496052', 'pickup_location': '海淀区搜狐网络中心大厦', 'pickup_time': '21:21', 'date': '20250308'}}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"form_request":{"amount":"13.99","request_id":"request_id_6496052","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308"}},"name":"return_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.000025286191058429804}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":55,"candidates_tokens_details":[{"modality":"TEXT","token_count":55}],"prompt_token_count":1737,"prompt_tokens_details":[{"modality":"TEXT","token_count":1737}],"total_token_count":1792},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+WARNING:google_genai.types:Warning: there are non-text parts in the response: ['function_call'],returning concatenated text result from text parts,check out the non text parts for full response from model.
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+None
+-----------------------------------------------------------
+Function calls:
+name: return_form, args: {'form_request': {'request_id': 'request_id_5353199', 'date': '20250308', 'pickup_location': '海淀区搜狐网络中心大厦', 'pickup_time': '21:21', 'amount': '13.99'}}
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"function_call":{"args":{"form_request":{"request_id":"request_id_5353199","date":"20250308","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","amount":"13.99"}},"name":"return_form"}}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.000020988725803115152}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":55,"candidates_tokens_details":[{"modality":"TEXT","token_count":55}],"prompt_token_count":1782,"prompt_tokens_details":[{"modality":"TEXT","token_count":1782}],"total_token_count":1837},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
+INFO:common.server.task_manager:Upserting task a2bcfc61-ecfb-470f-931c-1b59f0f4c727
+INFO:     127.0.0.1:36292 - "POST / HTTP/1.1" 200 OK
+INFO:google.adk.models.google_llm:Sending out request, model: gemini-2.0-flash-001, backend: ml_dev, stream: False
+INFO:google.adk.models.google_llm:
+LLM Request:
+-----------------------------------------------------------
+System Instruction:
+
+你是一个处理打车费报销的代理。
+
+当你收到打车费报销请求时，应首先使用 create_taxi_request_form() 创建一个新的请求表单。如果用户提供了表单所需的任何信息，请使用用户提供的值，否则保留默认占位符。表单包含以下字段：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间（24小时制，如 21:30）
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+创建表单后，应返回调用 return_form 的结果，并传入 create_taxi_request_form 调用返回的表单数据。
+
+当收到用户填写的表单后，应检查表单是否包含所有必需信息：
+  1. '上车地点'：员工上车的地点
+  2. '上车时间'：员工上车的时间
+  3. '乘车日期'：乘车的日期
+  4. '金额'：打车费金额
+
+如果缺少任何信息，应直接调用 return_form 方法拒绝请求，并提供缺失的字段。
+
+对于完整的报销请求，应使用 reimburse_taxi() 函数根据公司规定审核打车费用：
+- 公司仅报销上车时间为晚上9点到次日凌晨5点期间的打车费
+- 上车地点必须是中关村资本大厦附近（可接受：中关村资本大厦、中关村资本大厦北门、海淀区学院南路）
+- 不报销上车地点为中关村、望京、国贸等其他地方的打车费（注意：中关村资本大厦是例外，是可以的）
+
+在回复中，应包含请求ID和报销请求的状态（批准或拒绝），以及如果拒绝的话，拒绝的原因。
+
+
+You are an agent. Your internal name is "taxi_reimbursement_agent".
+
+ The description about you is "这个代理处理员工的打车费报销请求，根据公司规定审核打车费用是否符合报销条件。"
+-----------------------------------------------------------
+Contents:
+{"parts":[{"text":"报销从海淀区学院南路出发，到丰台区丽泽商务中心，22:42分出发"}],"role":"user"}
+{"parts":[{"text":"好的，请问乘车日期和打车费金额是多少？"}],"role":"model"}
+{"parts":[{"text":"乘车日期是20250307，金额66.78元"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_time":"22:42","pickup_location":"海淀区学院南路","amount":"66.78","date":"20250307"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_4119382","pickup_location":"海淀区学院南路","pickup_time":"22:42","date":"20250307","amount":"66.78"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382","date":"20250307","amount":"66.78"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"pickup_location\", \"pickup_time\", \"request_id\", \"date\", \"amount\"]}, \"form_data\": {\"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u5b66\\u9662\\u5357\\u8def\", \"pickup_time\": \"22:42\", \"request_id\": \"request_id_4119382\", \"date\": \"20250307\", \"amount\": \"66.78\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区学院南路\", \"pickup_time\": \"22:42\", \"date\": \"20250307\", \"amount\": \"66.78\", \"request_id\": \"request_id_4119382\"}"}],"role":"user"}
+{"parts":[{"text":"好的，已收到您的打车费报销请求，正在审核中，请稍候。\n"},{"function_call":{"args":{"pickup_location":"海淀区学院南路","pickup_time":"22:42","request_id":"request_id_4119382"},"name":"reimburse_taxi"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"reimburse_taxi","response":{"request_id":"request_id_4119382","status":"批准"}}}],"role":"user"}
+{"parts":[{"text":"您的打车费报销请求已获批准。请求ID是request_id_4119382。"}],"role":"model"}
+{"parts":[{"text":"报销从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"text":"从海淀区搜狐网络中心大厦出发，到中关村资本大厦，金额13.99元，21:21出发，日期为20250308"}],"role":"user"}
+{"parts":[{"function_call":{"args":{"amount":"13.99","date":"20250308","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_6496052","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308","amount":"13.99"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","amount":"13.99","date":"20250308"},"name":"create_taxi_request_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"create_taxi_request_form","response":{"request_id":"request_id_5353199","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308","amount":"13.99"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"amount":"13.99","request_id":"request_id_6496052","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","date":"20250308"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"amount\", \"request_id\", \"pickup_location\", \"pickup_time\", \"date\"]}, \"form_data\": {\"amount\": \"13.99\", \"request_id\": \"request_id_6496052\", \"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u641c\\u72d0\\u7f51\\u7edc\\u4e2d\\u5fc3\\u5927\\u53a6\", \"pickup_time\": \"21:21\", \"date\": \"20250308\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"function_call":{"args":{"form_request":{"request_id":"request_id_5353199","date":"20250308","pickup_location":"海淀区搜狐网络中心大厦","pickup_time":"21:21","amount":"13.99"}},"name":"return_form"}}],"role":"model"}
+{"parts":[{"function_response":{"name":"return_form","response":{"result":"{\"type\": \"form\", \"form\": {\"type\": \"object\", \"properties\": {\"pickup_location\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u5730\\u70b9\", \"title\": \"\\u4e0a\\u8f66\\u5730\\u70b9\"}, \"pickup_time\": {\"type\": \"string\", \"description\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\\uff0824\\u5c0f\\u65f6\\u5236\\uff0c\\u5982 21:30\\uff09\", \"title\": \"\\u4e0a\\u8f66\\u65f6\\u95f4\"}, \"date\": {\"type\": \"string\", \"format\": \"date\", \"description\": \"\\u4e58\\u8f66\\u65e5\\u671f\", \"title\": \"\\u65e5\\u671f\"}, \"amount\": {\"type\": \"string\", \"format\": \"number\", \"description\": \"\\u6253\\u8f66\\u8d39\\u91d1\\u989d\", \"title\": \"\\u91d1\\u989d\"}, \"request_id\": {\"type\": \"string\", \"description\": \"\\u8bf7\\u6c42ID\", \"title\": \"\\u8bf7\\u6c42ID\"}}, \"required\": [\"request_id\", \"date\", \"pickup_location\", \"pickup_time\", \"amount\"]}, \"form_data\": {\"request_id\": \"request_id_5353199\", \"date\": \"20250308\", \"pickup_location\": \"\\u6d77\\u6dc0\\u533a\\u641c\\u72d0\\u7f51\\u7edc\\u4e2d\\u5fc3\\u5927\\u53a6\", \"pickup_time\": \"21:21\", \"amount\": \"13.99\"}, \"instructions\": null}"}}}],"role":"user"}
+{"parts":[{"text":"{\"pickup_location\": \"海淀区搜狐网络中心大厦\", \"pickup_time\": \"21:21\", \"date\": \"2025-03-08\", \"amount\": \"13.99\", \"request_id\": \"request_id_6496052\"}"}],"role":"user"}
+-----------------------------------------------------------
+Functions:
+create_taxi_request_form: {'pickup_location': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'date': {'nullable': True, 'type': <Type.STRING: 'STRING'>}, 'amount': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+reimburse_taxi: {'request_id': {'type': <Type.STRING: 'STRING'>}, 'pickup_location': {'type': <Type.STRING: 'STRING'>}, 'pickup_time': {'type': <Type.STRING: 'STRING'>}} -> None
+return_form: {'form_request': {'type': <Type.OBJECT: 'OBJECT'>}, 'instructions': {'nullable': True, 'type': <Type.STRING: 'STRING'>}} -> None
+-----------------------------------------------------------
+
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent "HTTP/1.1 200 OK"
+INFO:google.adk.models.google_llm:
+LLM Response:
+-----------------------------------------------------------
+Text:
+{"pickup_location": "海淀区搜狐网络中心大厦", "pickup_time": "21:21", "date": "2025-03-08", "amount": "13.99", "request_id": "request_id_5353199"}
+由于您的出发地点不在公司规定的可报销范围内（中关村资本大厦附近），因此本次打车费不予报销。
+-----------------------------------------------------------
+Function calls:
+
+-----------------------------------------------------------
+Raw response:
+{"candidates":[{"content":{"parts":[{"text":"{\"pickup_location\": \"海淀区搜狐网络中心大厦\", \"pickup_time\": \"21:21\", \"date\": \"2025-03-08\", \"amount\": \"13.99\", \"request_id\": \"request_id_5353199\"}\n由于您的出发地点不在公司规定的可报销范围内（中关村资本大厦附近），因此本次打车费不予报销。"}],"role":"model"},"finish_reason":"STOP","avg_logprobs":-0.11357313915363794}],"model_version":"gemini-2.0-flash-001","usage_metadata":{"candidates_token_count":103,"candidates_tokens_details":[{"modality":"TEXT","token_count":103}],"prompt_token_count":3107,"prompt_tokens_details":[{"modality":"TEXT","token_count":3107}],"total_token_count":3210},"automatic_function_calling_history":[]}
+-----------------------------------------------------------
+
